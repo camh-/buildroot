@@ -444,6 +444,9 @@ different steps of the build process.
   tarball with a non-standard organization, this variable allows to
   override the package infrastructure default behavior.
 
+* +LIBFOO_EXTRACT_DIR+ can be set to change the directory where the
+  package is extracted.
+
 * +LIBFOO_CONFIGURE_CMDS+ lists the actions to be performed to
   configure the package before its compilation.
 
