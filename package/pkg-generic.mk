@@ -912,22 +912,6 @@ endif
 $$(eval $$(foreach p,$$($(2)_FINAL_ALL_DEPENDENCIES),\
 	$$(call UPPERCASE,$$(p))_RDEPENDENCIES += $(1)$$(sep)))
 
-# Ensure unified variable name conventions between all packages Some
-# of the variables are used by more than one infrastructure; so,
-# rather than duplicating the checks in each infrastructure, we check
-# all variables here in pkg-generic, even though pkg-generic should
-# have no knowledge of infra-specific variables.
-$(eval $(call check-deprecated-variable,$(2)_MAKE_OPT,$(2)_MAKE_OPTS))
-$(eval $(call check-deprecated-variable,$(2)_INSTALL_OPT,$(2)_INSTALL_OPTS))
-$(eval $(call check-deprecated-variable,$(2)_INSTALL_TARGET_OPT,$(2)_INSTALL_TARGET_OPTS))
-$(eval $(call check-deprecated-variable,$(2)_INSTALL_STAGING_OPT,$(2)_INSTALL_STAGING_OPTS))
-$(eval $(call check-deprecated-variable,$(2)_INSTALL_HOST_OPT,$(2)_INSTALL_HOST_OPTS))
-$(eval $(call check-deprecated-variable,$(2)_AUTORECONF_OPT,$(2)_AUTORECONF_OPTS))
-$(eval $(call check-deprecated-variable,$(2)_CONF_OPT,$(2)_CONF_OPTS))
-$(eval $(call check-deprecated-variable,$(2)_BUILD_OPT,$(2)_BUILD_OPTS))
-$(eval $(call check-deprecated-variable,$(2)_GETTEXTIZE_OPT,$(2)_GETTEXTIZE_OPTS))
-$(eval $(call check-deprecated-variable,$(2)_KCONFIG_OPT,$(2)_KCONFIG_OPTS))
-
 PACKAGES += $(1)
 
 ifneq ($$($(2)_PERMISSIONS),)
