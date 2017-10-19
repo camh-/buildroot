@@ -622,6 +622,39 @@ $(2)_TARGET_FINALIZE_HOOKS      ?=
 $(2)_ROOTFS_PRE_CMD_HOOKS       ?=
 $(2)_ROOTFS_POST_CMD_HOOKS      ?=
 
+# Ensure all virtual targets are PHONY. Listed alphabetically.
+.PHONY:	$(1) \
+	$(1)-all-external-deps \
+	$(1)-all-legal-info \
+	$(1)-all-source \
+	$(1)-all-source-check \
+	$(1)-build \
+	$(1)-clean-for-rebuild \
+	$(1)-clean-for-reconfigure \
+	$(1)-clean-for-reinstall \
+	$(1)-configure \
+	$(1)-depends \
+	$(1)-dirclean \
+	$(1)-external-deps \
+	$(1)-extract \
+	$(1)-graph-depends \
+	$(1)-install \
+	$(1)-install-host \
+	$(1)-install-images \
+	$(1)-install-staging \
+	$(1)-install-target \
+	$(1)-legal-info \
+	$(1)-legal-source \
+	$(1)-patch \
+	$(1)-rebuild \
+	$(1)-reconfigure \
+	$(1)-reinstall \
+	$(1)-rsync \
+	$(1)-show-depends \
+	$(1)-show-version \
+	$(1)-source \
+	$(1)-source-check
+
 # human-friendly targets and target sequencing
 $(1):			$(1)-install
 
@@ -929,39 +962,6 @@ ROOTFS_POST_CMD_HOOKS += $$($(2)_ROOTFS_POST_CMD_HOOKS)
 
 DL_TOOLS_DEPENDENCIES += $$(SITE_METHOD_DEPENDENCIES_$$(call UPPERCASE,$$($(2)_SITE_METHOD)))
 DL_TOOLS_DEPENDENCIES += $$(call extractor-dependency,$$($(2)_SOURCE))
-
-# Ensure all virtual targets are PHONY. Listed alphabetically.
-.PHONY:	$(1) \
-	$(1)-all-external-deps \
-	$(1)-all-legal-info \
-	$(1)-all-source \
-	$(1)-all-source-check \
-	$(1)-build \
-	$(1)-clean-for-rebuild \
-	$(1)-clean-for-reconfigure \
-	$(1)-clean-for-reinstall \
-	$(1)-configure \
-	$(1)-depends \
-	$(1)-dirclean \
-	$(1)-external-deps \
-	$(1)-extract \
-	$(1)-graph-depends \
-	$(1)-install \
-	$(1)-install-host \
-	$(1)-install-images \
-	$(1)-install-staging \
-	$(1)-install-target \
-	$(1)-legal-info \
-	$(1)-legal-source \
-	$(1)-patch \
-	$(1)-rebuild \
-	$(1)-reconfigure \
-	$(1)-reinstall \
-	$(1)-rsync \
-	$(1)-show-depends \
-	$(1)-show-version \
-	$(1)-source \
-	$(1)-source-check
 
 ifneq ($$($(2)_SOURCE),)
 ifeq ($$($(2)_SITE),)
