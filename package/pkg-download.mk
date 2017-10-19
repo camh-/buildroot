@@ -71,7 +71,12 @@ export BR_NO_CHECK_HASH_FOR =
 # The SOURCE_CHECK_* helpers are in charge of simply checking that the source
 # is available for download. This can be used to make sure one will be able
 # to get all the sources needed for one's build configuration.
+#
+# SITE_METHOD_DEPENDENCIES_* list the dependencies needed to execute
+# the method.
 ################################################################################
+
+SITE_METHOD_DEPENDENCIES_GIT = git
 
 define DOWNLOAD_GIT
 	$(EXTRA_ENV) $(DL_WRAPPER) -b git \
@@ -92,6 +97,8 @@ define SOURCE_CHECK_GIT
 	$(GIT) ls-remote --heads $($(PKG)_SITE) > /dev/null
 endef
 
+SITE_METHOD_DEPENDENCIES_BZR = bzr
+
 define DOWNLOAD_BZR
 	$(EXTRA_ENV) $(DL_WRAPPER) -b bzr \
 		-o $(DL_DIR)/$($(PKG)_SOURCE) \
@@ -106,6 +113,8 @@ endef
 define SOURCE_CHECK_BZR
 	$(BZR) ls --quiet $($(PKG)_SITE) > /dev/null
 endef
+
+SITE_METHOD_DEPENDENCIES_CVS = cvs
 
 define DOWNLOAD_CVS
 	$(EXTRA_ENV) $(DL_WRAPPER) -b cvs \
@@ -124,6 +133,8 @@ define SOURCE_CHECK_CVS
 	$(CVS) -d:pserver:anonymous:@$(call stripurischeme,$(call qstrip,$($(PKG)_SITE))) login
 endef
 
+SITE_METHOD_DEPENDENCIES_SVN = svn
+
 define DOWNLOAD_SVN
 	$(EXTRA_ENV) $(DL_WRAPPER) -b svn \
 		-o $(DL_DIR)/$($(PKG)_SOURCE) \
@@ -138,6 +149,8 @@ endef
 define SOURCE_CHECK_SVN
 	$(SVN) ls $($(PKG)_SITE)@$($(PKG)_DL_VERSION) > /dev/null
 endef
+
+SITE_METHOD_DEPENDENCIES_SCP = scp ssh
 
 # SCP URIs should be of the form scp://[user@]host:filepath
 # Note that filepath is relative to the user's home directory, so you may want
@@ -155,6 +168,8 @@ endef
 define SOURCE_CHECK_SCP
 	$(SSH) $(call domain,$(1),:) ls '$(call notdomain,$(1),:)' > /dev/null
 endef
+
+SITE_METHOD_DEPENDENCIES_HG = hg
 
 define DOWNLOAD_HG
 	$(EXTRA_ENV) $(DL_WRAPPER) -b hg \

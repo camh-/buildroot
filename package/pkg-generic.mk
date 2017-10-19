@@ -927,20 +927,7 @@ TARGET_FINALIZE_HOOKS += $$($(2)_TARGET_FINALIZE_HOOKS)
 ROOTFS_PRE_CMD_HOOKS += $$($(2)_ROOTFS_PRE_CMD_HOOKS)
 ROOTFS_POST_CMD_HOOKS += $$($(2)_ROOTFS_POST_CMD_HOOKS)
 
-ifeq ($$($(2)_SITE_METHOD),svn)
-DL_TOOLS_DEPENDENCIES += svn
-else ifeq ($$($(2)_SITE_METHOD),git)
-DL_TOOLS_DEPENDENCIES += git
-else ifeq ($$($(2)_SITE_METHOD),bzr)
-DL_TOOLS_DEPENDENCIES += bzr
-else ifeq ($$($(2)_SITE_METHOD),scp)
-DL_TOOLS_DEPENDENCIES += scp ssh
-else ifeq ($$($(2)_SITE_METHOD),hg)
-DL_TOOLS_DEPENDENCIES += hg
-else ifeq ($$($(2)_SITE_METHOD),cvs)
-DL_TOOLS_DEPENDENCIES += cvs
-endif # SITE_METHOD
-
+DL_TOOLS_DEPENDENCIES += $$(SITE_METHOD_DEPENDENCIES_$$(call UPPERCASE,$$($(2)_SITE_METHOD)))
 DL_TOOLS_DEPENDENCIES += $$(call extractor-dependency,$$($(2)_SOURCE))
 
 # Ensure all virtual targets are PHONY. Listed alphabetically.
