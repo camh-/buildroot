@@ -23,4 +23,13 @@ config BR2_PACKAGE_NCURSES_TARGET_PROGS
 	help
 	  Include ncurses programs in target (clear, reset, tput, ...)
 
+config BR2_PACKAGE_NCURSES_ADDITIONAL_TERMINFO
+	string "additional terminfo files to install to target"
+	help
+	  terminfo files to be installed to the target in addition to
+	  the vital few normally installed.
+
+	  The terminfo filenames should have the single letter path
+	  prefix. e.g. t/tmux.
+
 endif

@@ -60,7 +60,8 @@ NCURSES_TERMINFO_FILES = \
 	v/vt220 \
 	x/xterm \
 	x/xterm-color \
-	x/xterm-xfree86
+	x/xterm-xfree86 \
+	$(call qstrip,$(BR2_PACKAGE_NCURSES_ADDITIONAL_TERMINFO))
 
 ifeq ($(BR2_PACKAGE_NCURSES_WCHAR),y)
 NCURSES_CONF_OPTS += --enable-widec
