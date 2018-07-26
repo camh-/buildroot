@@ -99,6 +99,20 @@ therefore only use a few of them, or none.
    +FOO_BUILD_TARGETS = cmd/docker cmd/dockerd+ the binaries produced
    are +docker+ and +dockerd+.
 
+* +FOO_CGO_ENABLED+ overrides the default value for the +CGO_ENABLED+
+  flag passed to the Go compiler. By default +CGO_ENABLED+ is set
+  to 1 if the toolchain supports threads, but you can force it to
+  0 for the package by setting this variable. If the toolchain does
+  not support threads and you set +FOO_CGO_ENABLED+ to 1, an error
+  will be generated.
+
+* +FOO_BUILD_TARGET_CGO_ENABLED_<target>+ can be used to override
+  the +CGO_ENABLED+ flag passed to the Go compiler for a specific
+  build target, similar to +FOO_CGO_ENABLED+. +<target>+ references
+  a target listed in +FOO_BUILD_TARGETS+. If the toolchain does
+  not support threads and you set this variable to 1, an error will
+  be generated.
+
 * +FOO_INSTALL_BINS+ can be used to pass the list of binaries that
   should be installed in +/usr/bin+ on the target. If
   +FOO_INSTALL_BINS+ is not specified, it defaults to the lower-case

@@ -28,8 +28,20 @@ GO_BIN = $(HOST_DIR)/bin/go
 GO_TARGET_ENV = \
 	$(HOST_GO_TARGET_ENV) \
 	PATH=$(BR_PATH) \
-	GOBIN= \
-	CGO_ENABLED=$(HOST_GO_CGO_ENABLED)
+	GOBIN=
+
+# Allow CGO_ENABLED to be defined per package and per build target, but if
+# CGO is enabled for a package or a build target and the toolchain does not
+# support that, generate an error.
+GO_CGO_ENABLED = $(strip \
+	$(if $(filter 10,$($(1)_CGO_ENABLED)$(HOST_GO_CGO_ENABLED)),\
+		$(error Toolchain does not support CGO_ENABLED=1 for package $(1)),\
+		$(or $($(1)_CGO_ENABLED),$(HOST_GO_CGO_ENABLED))))
+
+GO_TARGET_CGO_ENABLED = $(strip \
+	$(if $(filter 10,$($(1)_BUILD_TARGET_CGO_ENABLED_$(2))$(HOST_GO_CGO_ENABLED)),\
+		$(error Toolchain does not support CGO_ENABLED=1 for target $(2)),\
+		$(or $($(1)_BUILD_TARGET_CGO_ENABLED_$(2)),$(call GO_CGO_ENABLED,$(1)))))
 
 ################################################################################
 # inner-golang-package -- defines how the configuration, compilation and
@@ -100,6 +112,7 @@ define $(2)_BUILD_CMDS
 	$$(foreach d,$$($(2)_BUILD_TARGETS),\
 		cd $$($(2)_SRC_PATH); \
 		$$(GO_TARGET_ENV) \
+			CGO_ENABLED=$$(call GO_TARGET_CGO_ENABLED,$(2),$$(d)) \
 			GOPATH="$$(@D)/$$($(2)_WORKSPACE)" \
 			$$($(2)_GO_ENV) \
 			$$(GO_BIN) build -v $$($(2)_BUILD_OPTS) \
